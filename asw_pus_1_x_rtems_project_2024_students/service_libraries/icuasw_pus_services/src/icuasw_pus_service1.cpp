@@ -82,18 +82,18 @@ void PUSService1::TryTCAcceptation(CDTCHandler &tcHandler) {
 		uint8_t subtype = tcHandler.GetSubType();
 
 		switch (type) {
-		//TODO TC Acceptance and TC Classification
-//		case (9):
-//
-//			switch (subtype) {
-//
-//			case (129):
-//				tcHandler.SetExecCtrlAsPrioTC();
-//				break;
-//			default:
-//				acceptationStatus = TCAcceptationSubTypeError;
-//			}
-//			break;
+		//Rejects non 9-129 or non 17-1. Assigns priority to those telecommands
+		case (9):
+
+			switch (subtype) {
+
+			case (129):
+				tcHandler.SetExecCtrlAsPrioTC();
+				break;
+			default:
+				acceptationStatus = TCAcceptationSubTypeError;
+			}
+			break;
 		case (17):
 			switch (subtype) {
 			case (1):
