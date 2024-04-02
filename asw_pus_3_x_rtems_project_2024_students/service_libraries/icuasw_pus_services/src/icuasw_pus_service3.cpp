@@ -1,13 +1,4 @@
-/*
- * icuaasw_pus_service3.cpp
- *
- *  Created on: Dec 22, 2023
- *      Author: user
- */
-
-
 #include <stdio.h>
-
 #include <public/icuasw_pus_services_iface_v1.h>
 
 HKConfig_t PUSService3::HKConfig[PUS_SERVICE3_MAX_NUM_OF_SIDS]={
@@ -21,13 +12,13 @@ HKConfig_t PUSService3::HKConfig[PUS_SERVICE3_MAX_NUM_OF_SIDS]={
     {false,0,0,0,0,{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}}
 };
 
-void PUSService3::Init(){
-
+void PUSService3::Init()
+{
 	SystemDataPool::Init();
 }
 
-void PUSService3::ExecTC(CDTCHandler &tcHandler, CDTMList &List) {
-
+void PUSService3::ExecTC(CDTCHandler &tcHandler, CDTMList &List)
+{
 	switch (tcHandler.GetSubType()) {
 	case (5):
 		Exec3_5TC(tcHandler, List);
@@ -55,11 +46,10 @@ bool PUSService3::GetSIDIndex(uint16_t SID, uint8_t &index) {
 }
 
 void PUSService3::ExecEnableConfigTC(CDTCHandler &tcHandler, CDTMList &tmList,
-		bool newEnableConfig) {
-
+		bool newEnableConfig)
+{
 	uint8_t index;
 	uint16_t SID = tcHandler.GetNextUInt16();
-
 	if (GetSIDIndex(SID, index)) {
 		HKConfig[index].enabled = newEnableConfig;
 		HKConfig[index].intervalControl = 0;
@@ -67,24 +57,22 @@ void PUSService3::ExecEnableConfigTC(CDTCHandler &tcHandler, CDTMList &tmList,
 	} else {
 		PUSService1::BuildTM_1_8_TC_3_X_SIDNotValid(tcHandler, tmList,SID);
 	}
-
 }
 
-void PUSService3::Exec3_5TC(CDTCHandler &tcHandler, CDTMList &tmList) {
-
+void PUSService3::Exec3_5TC(CDTCHandler &tcHandler, CDTMList &tmList)
+{
 	ExecEnableConfigTC(tcHandler, tmList, true);
-
 }
-void PUSService3::Exec3_6TC(CDTCHandler &tcHandler, CDTMList &tmList) {
 
+void PUSService3::Exec3_6TC(CDTCHandler &tcHandler, CDTMList &tmList)
+{
 	ExecEnableConfigTC(tcHandler, tmList, false);
-
 }
-void PUSService3::Exec3_31TC(CDTCHandler &tcHandler, CDTMList &tmList) {
+
+void PUSService3::Exec3_31TC(CDTCHandler &tcHandler, CDTMList &tmList)
+{
 	uint8_t index;
-
 	uint16_t SID = tcHandler.GetNextUInt16();
-
 	if (GetSIDIndex(SID, index)) {
 		uint8_t interval = tcHandler.GetNextUInt8();
 		HKConfig[index].interval = interval;
@@ -93,17 +81,13 @@ void PUSService3::Exec3_31TC(CDTCHandler &tcHandler, CDTMList &tmList) {
 	} else {
 		PUSService1::BuildTM_1_8_TC_3_X_SIDNotValid(tcHandler, tmList,SID);
 	}
-
 }
 
 
-void PUSService3::DoHK(CDTMList &tmList) {
-
-
+void PUSService3::DoHK(CDTMList &tmList)
+{
 	printf("Do_HK\n");
-
 	//TODO param sampling
-
 	for (int i = 0; i < PUS_SERVICE3_MAX_NUM_OF_SIDS; i++) {
 		if (HKConfig[i].enabled) {
 			HKConfig[i].intervalControl++;
@@ -115,22 +99,16 @@ void PUSService3::DoHK(CDTMList &tmList) {
 			}
 		}
 	}
-
 }
 
-void PUSService3::BuildTM_3_25(CDTMList &tmList, HKConfig_t &hkConfig){
-
+void PUSService3::BuildTM_3_25(CDTMList &tmList, HKConfig_t &hkConfig)
+{
 	CDTMHandler tm_handler(3, 25);
-
 	tm_handler.SetUInt16AppDataField(hkConfig.SID);
-
 	for (int j = 0; j < hkConfig.ParamNum; j++) {
 		uint8_t pid=hkConfig.ParamDef[j];
 		uint16_t paramValue=SystemDataPool::sParamCurrentValue[pid];
 		tm_handler.SetUInt16AppDataField(paramValue);
-
 	}
-
 	tmList.AddTM(tm_handler.CloseTM());
-
 }

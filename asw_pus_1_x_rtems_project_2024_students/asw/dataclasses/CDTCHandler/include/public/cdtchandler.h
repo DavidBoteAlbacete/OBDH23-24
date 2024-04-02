@@ -7,7 +7,7 @@
 #include "public/tmtc_dyn_mem.h"
 
 enum TTCExecCtrl {
-	ExecCtrlPrioTC, ExecCtrlReboot
+	ExecCtrlPrioTC, ExecCtrlReboot,ExecCtrlHK_FDIRTC
 };
 
 enum TTCAcceptationStatus {
@@ -99,6 +99,18 @@ protected:
 	}
 
 	/**
+	 * \brief Set mTCExecCtrl to ExecCtrlHK_FDIRTC
+	 *
+	 */
+
+	void SetExecCtrlAsHK_FDIRTC() {
+
+		mTCExecCtrl = ExecCtrlHK_FDIRTC;
+	}
+
+
+
+	/**
 	 * \brief Set Acceptation Status
 	 *
 	 */
@@ -149,6 +161,10 @@ public:
 
 	bool_t IsRebootTC() {
 		return ExecCtrlReboot == mTCExecCtrl;
+	}
+
+	bool_t IsHK_FDIRTC() {
+		return ExecCtrlHK_FDIRTC == mTCExecCtrl;
 	}
 
 	/**

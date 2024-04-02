@@ -1,8 +1,6 @@
 #ifndef PUBLIC__ICUASW_PUS_SERVICES_IFACE_V1_H
 #define PUBLIC__ICUASW_PUS_SERVICES_IFACE_V1_H
-
 #include <public/cdtmlist_iface_v1.h>
-
 #include "public/config.h"
 #include "public/basic_types.h"
 #include "public/serialize.h"
@@ -15,12 +13,9 @@
 typedef uint16_t sysdatapool_element_t;
 
 class SystemDataPool{
-
 	friend class PUSService3;
 private:
-
 	static sysdatapool_element_t sParamCurrentValue[DATAPOOL_PARAMNumber];
-
 	static void Init();
 };
 
@@ -32,22 +27,16 @@ private:
 
 
 class PUSPrioTCExecutor {
-
 public:
 	static void ExecTC(CDTCHandler &tc_handler, CDTMList &tm_list,
 			CDEventList &eventList);
 };
+
 
 class PUS_HK_FDIR_TCExecutor {
-
 public:
 	static void ExecTC(CDTCHandler &tc_handler, CDTMList &tm_list,
 			CDEventList &eventList);
 };
-
-
 /*PROTECTED REGION END*/
-
-
-
 #endif // PUBLIC__CONSOLE_DRV_IFACE_V1_H

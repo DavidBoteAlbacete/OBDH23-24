@@ -1,6 +1,5 @@
 #ifndef FCDTCDescriptorH
 #define FCDTCDescriptorH
-
 #include "public/config.h"
 #include "public/basic_types.h"
 #include "public/ccsds_pus.h"
@@ -21,28 +20,22 @@ enum TTCAcceptationStatus {
 };
 
 class CDTCHandler {
-
 	friend class PUSService1;
 	friend class PUSService9;
-	friend class PUSService3;
 	friend class PUSService17;
-
+	//Friendship Added
+	friend class PUSService3;
 	friend class PUSPrioTCExecutor;
 	friend class PUS_HK_FDIR_TCExecutor;
-
 	friend void SC_Channel_GetNextTC(CDTCHandler *tc);
 
 protected:
-
 	//TC descriptor
 	tc_descriptor_t mTCDescriptor;
-
 	//TC App Data Index to control TC fields retrieving
 	uint16_t mTCAppDataIndex;
-
 	//Attribute to control which task executes the telecommand
 	TTCExecCtrl mTCExecCtrl;
-
 	//Attribute that defines the acceptation error;
 	TTCAcceptationStatus mAcceptationStatus;
 
@@ -80,55 +73,41 @@ protected:
 	 * \brief Set mTCExecCtrl to ExecCtrlEPDManagerTask
 	 *
 	 */
-
 	void SetExecCtrlAsPrioTC() {
 		mTCExecCtrl = ExecCtrlPrioTC;
-
 	}
 
 	/**
 	 * \brief Set mTCExecCtrl to ExecCtrlReboot
 	 *
 	 */
-
 	void SetExecCtrlAsRebootTC() {
-
 		mTCExecCtrl = ExecCtrlReboot;
 	}
 
 	/**
-	 * \brief Set mTCExecCtrl to ExecCtrlHK_FDIRTC
-	 *
-	 */
-
-	void SetExecCtrlAsHK_FDIRTC() {
-
+	* \brief Set mTCExecCtrl to ExecCtrlHK_FDIRTC
+	*
+	*/
+	void SetExecCtrlAsHK_FDIRTC(){
 		mTCExecCtrl = ExecCtrlHK_FDIRTC;
 	}
-
 
 	/**
 	 * \brief Set Acceptation Status
 	 *
 	 */
-
 	void SetAcceptationStatus(TTCAcceptationStatus status) {
-
 		mAcceptationStatus = status;
-
 	}
 
 	/**
 	 * \brief Get Acceptation Status
 	 *
 	 */
-
 	TTCAcceptationStatus GetAcceptationStatus() {
-
 		return mAcceptationStatus;
-
 	}
-
 	/**
 	* \brief Get Acceptation Status
 	*
@@ -146,7 +125,6 @@ public:
 	 *
 	 * \return the telecommand's APID
 	 */
-
 	bool_t IsAccepted() {
 		return (TCAcceptationOK == mAcceptationStatus);
 	}
@@ -160,8 +138,8 @@ public:
 		return ExecCtrlReboot == mTCExecCtrl;
 	}
 
-	bool_t IsHK_FDIRTC() {
-		return ExecCtrlHK_FDIRTC == mTCExecCtrl;
+	bool_t IsHK_FDIRTC(){
+		return ExecCtrlHK_FDIRTC==mTCExecCtrl;
 	}
 
 	/**
@@ -169,7 +147,6 @@ public:
 	 *
 	 * \return the telecommand's APID
 	 */
-
 	uint16_t GetPacketID();
 
 	/**
@@ -177,7 +154,6 @@ public:
 	 *
 	 * \return the telecommand's APID
 	 */
-
 	uint16_t GetAPID();
 
 	/**
@@ -185,7 +161,6 @@ public:
 	 *
 	 * \return the telecommand's Packet Sequence Control
 	 */
-
 	uint16_t GetPackSeqCtrl();
 
 	/**
@@ -193,7 +168,6 @@ public:
 	 *
 	 * \return the telecommand's Sequence Flags
 	 */
-
 	uint8_t GetSeqFlags();
 
 	/**
@@ -201,7 +175,6 @@ public:
 	 *
 	 * \return the telecommand's Sequence Count
 	 */
-
 	uint16_t GetSeqCount();
 
 	/**
@@ -209,7 +182,6 @@ public:
 	 *
 	 * \return the telecommand's Sequence Count
 	 */
-
 	uint16_t GetPackLength();
 
 	/**
@@ -217,7 +189,6 @@ public:
 	 *
 	 * \return the telecommand's Ack
 	 */
-
 	uint8_t GetAck();
 
 	/**
@@ -225,7 +196,6 @@ public:
 	 *
 	 * \return the telecommand's type
 	 */
-
 	uint8_t GetType();
 
 	/**
@@ -233,7 +203,6 @@ public:
 	 *
 	 * \return the telecommand's subtype
 	 */
-
 	uint8_t GetSubType();
 
 	/**
@@ -241,7 +210,6 @@ public:
 	 *
 	 * \return the telecommand's SourceID
 	 */
-
 	uint8_t GetSourceID();
 
 	/**
@@ -249,7 +217,6 @@ public:
 	 *
 	 * \return the calculated telecommand's Pack Error Ctrl
 	 */
-
 	uint16_t GetCalculatedCRC();
 
 	/**
@@ -257,9 +224,7 @@ public:
 	 *
 	 * \return the telecommand's Pack Error Ctrl
 	 */
-
 	uint16_t GetPacketErrorCtrl();
-
 };
 
 #endif

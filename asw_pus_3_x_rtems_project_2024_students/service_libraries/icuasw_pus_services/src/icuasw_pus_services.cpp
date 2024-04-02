@@ -1,11 +1,3 @@
-/*
- * icuasw_pus_services.cpp
- *
- *  Created on: Jan 10, 2017
- *      Author: user
- */
-
-
 #include "public/icuasw_pus_services_iface_v1.h"
 #include "public/serialize.h"
 #include "public/tmtc_dyn_mem.h"
@@ -22,7 +14,6 @@ void SystemDataPool::Init(){
 
 void PUSPrioTCExecutor::ExecTC(CDTCHandler &tc_handler, CDTMList &tm_list,
 		CDEventList &eventList){
-
 		tc_handler.StartUpExecution();
 		switch (tc_handler.GetType()) {
 					case (9):
@@ -39,9 +30,7 @@ void PUSPrioTCExecutor::ExecTC(CDTCHandler &tc_handler, CDTMList &tm_list,
 
 void PUS_HK_FDIR_TCExecutor::ExecTC(CDTCHandler &tc_handler, CDTMList &tm_list,
 		CDEventList &eventList){
-
 		tc_handler.StartUpExecution();
-
 		switch (tc_handler.GetType()) {
 				   //TODO Exec Service 3 Telecommands
 					case(3):
